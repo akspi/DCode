@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-import { Done } from '@material-ui/icons';
+import { Clear, Done } from '@material-ui/icons';
 import * as PropTypes from 'prop-types';
 
 const drawerWidth = 240;
@@ -44,17 +44,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(problemNumber, problemName, solved) {
+function createData(submissionTime, problemName, verdict) {
   return {
-    problemNumber, problemName, solved
+    submissionTime, problemName, verdict
   };
 }
 
-export default function QuestionList(props) {
-  const classes = useStyles();
-  const { isOpen, questions } = props;
+const rows = [
+  createData('21.3.19 19:02', 'DIY Wooden Ladder', false),
+  createData('21.3.19 19:06', 'DIY Wooden Ladder', false),
+  createData('21.3.19 19:15', 'DIY Wooden Ladder', true),
+  createData('21.3.19 19:45', 'Welfare State', false),
+  createData('21.3.19 20:00', 'Welfare State', true),
+];
 
-  const rows = questions.map((question) => createData(question.id, question.name, question.solved));
+export default function SubmissionList(props) {
+  const classes = useStyles();
+  const { isOpen } = props;
 
   return (
     <Paper
@@ -64,23 +70,23 @@ export default function QuestionList(props) {
     >
       <Table className={classes.table}>
         <colgroup>
-          <col width="20%" />
-          <col width="70%" />
+          <col width="30%" />
+          <col width="60%" />
           <col width="10%" />
         </colgroup>
         <TableHead>
           <TableRow>
-            <TableCell align="left">No.</TableCell>
+            <TableCell align="left">Submission Time</TableCell>
             <TableCell align="left">Problem Name</TableCell>
-            <TableCell align="right">Solved</TableCell>
+            <TableCell align="right">Verdict</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name} hover>
-              <TableCell align="left">{row.problemNumber}</TableCell>
+              <TableCell align="left">{row.submissionTime}</TableCell>
               <TableCell align="left">{row.problemName}</TableCell>
-              <TableCell align="right">{row.solved ? <Done /> : ''}</TableCell>
+              <TableCell align="right">{row.verdict ? <Done /> : <Clear />}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -89,7 +95,6 @@ export default function QuestionList(props) {
   );
 }
 
-QuestionList.propTypes = {
-  isOpen: PropTypes.bool,
-  questions: PropTypes.array
+SubmissionList.propTypes = {
+  isOpen: PropTypes.bool
 };
