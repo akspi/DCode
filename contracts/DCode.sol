@@ -42,18 +42,7 @@ contract DCode {
   function addContest() public returns (uint) {
     contestId += 1;
     contestOwnerMap[msg.sender].push(contestId);
-
-    ContestDetails memory newContestDetails = ContestDetails({
-      problemSetIpfs: new Problem[](0),
-      contestCreator: msg.sender
-    });
-    contestDetailsMap[contestId] = newContestDetails;
-
-    // ContestStatus memory newContestStatus = ContestStatus({
-    //   resolvedSubmissionList: new Entry[](0)
-    // });
-    // contestStatusMap[contestId] = newContestStatus;
-
+    contestDetailsMap[contestId].contestCreator = msg.sender;
     return contestId;
   }
 
