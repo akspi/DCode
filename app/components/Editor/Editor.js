@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import * as PropTypes from 'prop-types';
+import { getQuestionCount } from '../../utils/web3ContractMethods';
 
 const drawerWidth = 240;
 
@@ -81,7 +82,9 @@ function readFileContent(file) {
 export default function Editor(props) {
   const classes = useStyles();
   const [fileName, setFileName] = useState('');
-  const { code, setCode } = props;
+  const {
+    code, setCode, questions, changeSelectedProblem, selectedProblem, onSubmit
+  } = props;
   let fileUpload = null;
 
   return (
@@ -105,16 +108,15 @@ export default function Editor(props) {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Select
-            value={0}
+            value={selectedProblem}
             inputProps={{
               name: 'age',
               id: 'age-simple',
             }}
+            onChange={(evt) => changeSelectedProblem(evt.target.value)}
           >
-            <MenuItem value={0} disabled>Select the problem</MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={-1} disabled>Select the problem</MenuItem>
+            {questions.map((question) => <MenuItem value={question.id}>{question.name}</MenuItem>)}
           </Select>
         </Grid>
         <Grid item xs={6}>
@@ -151,7 +153,7 @@ export default function Editor(props) {
         justify="center"
       >
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" className={classes.button}>
+          <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}>
             Submit Code
           </Button>
         </Grid>
@@ -164,5 +166,9 @@ export default function Editor(props) {
 
 Editor.propTypes = {
   code: PropTypes.string,
-  setCode: PropTypes.func
+  setCode: PropTypes.func,
+  questions: PropTypes.array,
+  selectedProblem: PropTypes.number,
+  changeSelectedProblem: PropTypes.func,
+  onSubmit: PropTypes.func
 };

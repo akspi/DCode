@@ -3,10 +3,10 @@ import { ipfs } from './ipfsConf';
 const SHA1 = require('crypto-js/sha1');
 
 export async function getIpfsFileFromHash(ipfsHash) {
-  const files =  await ipfs.get(ipfsHash);
-  return files.map(element => {
-    return element.content.toString('utf8');
-  });
+  const files = await ipfs.get(ipfsHash);
+  const JSONfile = files.map((element) => element.content.toString('utf8'));
+  console.log(JSON.parse(JSONfile));
+  return JSON.parse(JSONfile);
 }
 
 export async function addFileToIpfs(fileString, encrypt = false) {

@@ -53,7 +53,9 @@ function createData(problemNumber, problemName, solved) {
 
 function QuestionList(props) {
   const classes = useStyles();
-  const { isOpen, questions, history, location } = props;
+  const {
+    isOpen, questions, history, location
+  } = props;
 
   const rows = questions.map((question) => createData(question.id, question.name, question.solved));
 
@@ -78,7 +80,7 @@ function QuestionList(props) {
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow key={index} hover style={{ cursor: 'pointer' }} onClick={() => {history.push(`${location.pathname}/${row.problemNumber}`)}}>
+            <TableRow key={index} hover style={{ cursor: 'pointer' }} onClick={() => { history.push(`${location.pathname}/${row.problemNumber - 1}`); }}>
               <TableCell align="left">{row.problemNumber}</TableCell>
               <TableCell align="left">{row.problemName}</TableCell>
               <TableCell align="right">{row.solved ? <Done /> : ''}</TableCell>

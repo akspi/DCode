@@ -7,6 +7,7 @@ import NavigationDrawer from '../../components/NavigationDrawer';
 import Problem from '../../components/Problem';
 import { getProblemDetails } from '../../utils/web3ContractMethods';
 import { getIpfsFileFromHash } from '../../utils/ipfsMethods';
+
 const ReactMarkdown = require('react-markdown');
 
 
@@ -26,13 +27,13 @@ class ProblemStatement extends Component {
   }
 
   async componentDidMount() {
-    const url = window.location['href'].split('/');
+    const url = window.location.href.split('/');
     const contestId = url[3];
     const problemIndex = url[5];
     const ipfsHash = await getProblemDetails(contestId, problemIndex);
     const file = await getIpfsFileFromHash(ipfsHash);
     this.setState({
-      file: file[0],
+      file,
     });
   }
 
@@ -51,8 +52,8 @@ class ProblemStatement extends Component {
         <CssBaseline />
         <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={''} />
         <NavigationDrawer isDrawerOpen={open} setIsDrawerOpen={this.setOpen} />
-        <div style={{'margin-top': '75px'}}>
-          <ReactMarkdown isOpen={open} source={this.state.file}/>
+        <div style={{ marginTop: 75 }}>
+          <ReactMarkdown isOpen={open} source={this.state.file} />
         </div>
       </div>
     );
