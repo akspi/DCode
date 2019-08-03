@@ -57,6 +57,7 @@
     "sanitize.css": "10.0.0",
     "typeface-roboto": "0.0.75",
     "warning": "^4.0.3",
+    "web3": "^1.2.0",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
