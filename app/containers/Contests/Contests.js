@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import * as PropTypes from 'prop-types';
 import Header from '../../components/Header';
 import ContestList from '../../components/ContestList';
+import NavigationDrawer from '../../components/NavigationDrawer/NavigationDrawer';
 
 const styles = () => ({
   root: {
@@ -12,20 +13,35 @@ const styles = () => ({
 });
 
 class Contests extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: true
+    };
+  }
+
   componentDidMount() {
     const { fetchContests } = this.props;
     fetchContests();
   }
 
+  setOpen = (value) => {
+    this.setState({
+      open: value
+    });
+  };
+
   render() {
     const {
       classes, contests, registerContest, history
     } = this.props;
+    const { open } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Header setIsDrawerOpen={() => {}} isDrawerOpen={false} title={'Contests'} />
+        <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={'Contests'} />
+        <NavigationDrawer isDrawerOpen={open} setIsDrawerOpen={this.setOpen} />
         <ContestList isOpen contests={contests} onClick={(contestId) => { history.push(`/${contestId}/problems`); }} registerContest={registerContest} />
       </div>
     );

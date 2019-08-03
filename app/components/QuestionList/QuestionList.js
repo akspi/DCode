@@ -77,8 +77,8 @@ function QuestionList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name} hover style={{ cursor: 'pointer' }} onClick={() => {history.push(`${location.pathname}/${row.problemNumber}`)}}>
+          {rows.map((row, index) => (
+            <TableRow key={index} hover style={{ cursor: 'pointer' }} onClick={() => {history.push(`${location.pathname}/${row.problemNumber}`)}}>
               <TableCell align="left">{row.problemNumber}</TableCell>
               <TableCell align="left">{row.problemName}</TableCell>
               <TableCell align="right">{row.solved ? <Done /> : ''}</TableCell>

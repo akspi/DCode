@@ -90,7 +90,8 @@ function ContestList(props) {
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow key={row.name} key={index} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
+            // eslint-disable-next-line react/no-array-index-key
+            <TableRow key={index} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
               <TableCell align="left">{row.contestName}</TableCell>
               <TableCell align="left">{row.contestDate}</TableCell>
               <TableCell align="left">{row.numParticipants}</TableCell>

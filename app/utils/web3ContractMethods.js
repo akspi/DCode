@@ -16,14 +16,14 @@ export async function getContestDetails(contestId) {
 }
 
 export async function addContest(contestName) {
-  return DCodeInstance.methods.addContest().send(getSendParams());
+  return DCodeInstance.methods.addContest(contestName).send(await getSendParams());
 }
 
 export async function registerUser(contestId) {
   return DCodeInstance.methods.registerUser(contestId).send(await getSendParams());
 }
 
-async function addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs) {
+export async function addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs) {
   return DCodeInstance.methods.addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs).send(getSendParams());
 }
 

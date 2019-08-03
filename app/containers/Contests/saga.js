@@ -15,7 +15,7 @@ export function* fetchContests() {
         name: contest.contestName,
         date: '03/07/19',
         participants: parseInt(contest.registraionCount, 10),
-        registered: false
+        registered: !contest.isUserRegistered
       });
     }
 
