@@ -1,0 +1,12 @@
+function solution(numbers) {
+  let oddSum = 0;
+  let evenSum = 0;
+  numbers.forEach(number => {
+    if (number % 2 == 0)
+      evenSum += number;
+    else
+      oddSum += number;
+  });
+
+  return evenSum === oddSum;
+}
