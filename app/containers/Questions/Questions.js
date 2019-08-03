@@ -32,7 +32,7 @@ class Questions extends Component {
   };
 
   render() {
-    const { classes, questions } = this.props;
+    const { classes, questions, isLoading } = this.props;
     const { open } = this.state;
 
     return (
@@ -40,7 +40,7 @@ class Questions extends Component {
         <CssBaseline />
         <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={'Problems'} />
         <NavigationDrawer isDrawerOpen={open} setIsDrawerOpen={this.setOpen} />
-        <QuestionList isOpen={open} questions={questions} />
+        <QuestionList isOpen={open} questions={questions} isLoading={isLoading} />
       </div>
     );
   }
@@ -50,7 +50,8 @@ Questions.propTypes = {
   fetchQuestions: PropTypes.func,
   classes: PropTypes.any,
   questions: PropTypes.array,
-  match: PropTypes.any
+  match: PropTypes.any,
+  isLoading: PropTypes.bool
 };
 
 export default withStyles(styles)(Questions);

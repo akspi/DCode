@@ -2,7 +2,7 @@ import {
   call, put, select, takeEvery
 } from 'redux-saga/effects';
 import {
-  FETCH_CONTESTS, REGISTER_CONTEST, updateContests, updateErrorMessage
+  FETCH_CONTESTS, REGISTER_CONTEST, updateContests, updateErrorMessage, updateIsLoading,
 } from './actions';
 import { getContestDetails, getOngoingContest, registerUser } from '../../utils/web3ContractMethods';
 import { toast } from 'react-toastify';
@@ -21,6 +21,7 @@ export const getContestState = (state) => state.contests;
 
 export function* fetchContests() {
   try {
+    yield put(updateIsLoading(true));
     const result = yield call(getOngoingContest);
     const contests = [];
 
@@ -36,6 +37,7 @@ export function* fetchContests() {
     }
 
     yield put(updateContests(contests));
+    yield put(updateIsLoading(false));
   } catch (err) {
     console.log(err);
     yield put(updateErrorMessage(err.toString()));

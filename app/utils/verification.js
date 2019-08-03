@@ -1,10 +1,14 @@
 import { getPendingSubmission, verifyResults } from './web3ContractMethods';
 import { verifyCode } from './ipfsMethods';
 
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 export async function submissionVerification() {
-  console.log("Beginning Verification");
+  console.log('Beginning Verification');
   try {
-    const pendingSubmission  = await getPendingSubmission();
+    const pendingSubmission = await getPendingSubmission();
     console.log(pendingSubmission);
     const result = await verifyCode(
       pendingSubmission.codeIpfs,
@@ -16,4 +20,8 @@ export async function submissionVerification() {
   } catch (err) {
     console.log(err);
   }
+
+  sleep(2000).then(() => {
+    submissionVerification();
+  });
 }

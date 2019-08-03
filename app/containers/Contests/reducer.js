@@ -1,4 +1,4 @@
-import { UPDATE_CONTESTS, UPDATE_ERROR_MESSAGE } from './actions';
+import { UPDATE_CONTESTS, UPDATE_ERROR_MESSAGE, UPDATE_IS_LOADING } from './actions';
 
 // The initial state of the App
 const initialState = {
@@ -14,6 +14,8 @@ function contestsReducer(state = initialState, action) {
     case UPDATE_ERROR_MESSAGE: {
       return { ...state, contests: action.msg };
     }
+    case UPDATE_IS_LOADING:
+      return { ...state, isLoading: action.isLoading };
     default:
       return state;
   }

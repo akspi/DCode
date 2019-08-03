@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import * as PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
+import LoadingIndicator from '../LoadingIndicator';
 
 const drawerWidth = 240;
 
@@ -54,7 +55,7 @@ function createData(contestId, contestName, contestDate, numParticipants, regist
 function ContestList(props) {
   const classes = useStyles();
   const {
-    isOpen, contests, onClick, enqueueSnackbar, registerContest
+    isOpen, contests, onClick, enqueueSnackbar, registerContest, isLoading
   } = props;
 
   const rows = contests.map((contest) => createData(contest.id, contest.name, contest.date, contest.participants, contest.registered));
@@ -73,38 +74,40 @@ function ContestList(props) {
         [classes.contentShift]: isOpen,
       })}
     >
-      <Table className={classes.table}>
-        <colgroup>
-          <col width="40%" />
-          <col width="20%" />
-          <col width="20%" />
-          <col width="20%" />
-        </colgroup>
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Contest Name</TableCell>
-            <TableCell align="left">Contest Date</TableCell>
-            <TableCell align="left">Number of Participants</TableCell>
-            <TableCell align="left" />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <TableRow key={index} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
-              <TableCell align="left">{row.contestName}</TableCell>
-              <TableCell align="left">{row.contestDate}</TableCell>
-              <TableCell align="left">{row.numParticipants}</TableCell>
-              <TableCell align="center">{
-                !row.registered
-                  ? <Button variant={'contained'} color={'secondary'} onClick={(e) => { e.stopPropagation(); console.log(row.contestId); registerContest(row.contestId); }}>Register</Button>
-                  : <Button variant={'contained'} color={'secondary'} disabled>Registered</Button>
-              }
-              </TableCell>
+      { isLoading ? <LoadingIndicator /> : (
+        <Table className={classes.table}>
+          <colgroup>
+            <col width="40%" />
+            <col width="20%" />
+            <col width="20%" />
+            <col width="20%" />
+          </colgroup>
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">Contest Name</TableCell>
+              <TableCell align="left">Contest Date</TableCell>
+              <TableCell align="left">Number of Participants</TableCell>
+              <TableCell align="left" />
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+              <TableRow key={index} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
+                <TableCell align="left">{row.contestName}</TableCell>
+                <TableCell align="left">{row.contestDate}</TableCell>
+                <TableCell align="left">{row.numParticipants}</TableCell>
+                <TableCell align="center">{
+                  !row.registered
+                    ? <Button variant={'contained'} color={'secondary'} onClick={(e) => { e.stopPropagation(); console.log(row.contestId); registerContest(row.contestId); }}>Register</Button>
+                    : <Button variant={'contained'} color={'secondary'} disabled>Registered</Button>
+                }
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </Paper>
   );
 }
@@ -113,7 +116,8 @@ ContestList.propTypes = {
   isOpen: PropTypes.bool,
   contests: PropTypes.array,
   onClick: PropTypes.func,
-  registerContest: PropTypes.func
+  registerContest: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default withSnackbar(ContestList);

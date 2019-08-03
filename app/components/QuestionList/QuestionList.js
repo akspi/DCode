@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { Done } from '@material-ui/icons';
 import * as PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import LoadingIndicator from '../LoadingIndicator';
 
 const drawerWidth = 240;
 
@@ -54,7 +55,7 @@ function createData(problemNumber, problemName, solved) {
 function QuestionList(props) {
   const classes = useStyles();
   const {
-    isOpen, questions, history, location
+    isOpen, questions, history, location, isLoading
   } = props;
 
   const rows = questions.map((question) => createData(question.id, question.name, question.solved));
@@ -65,36 +66,39 @@ function QuestionList(props) {
         [classes.contentShift]: isOpen,
       })}
     >
-      <Table className={classes.table}>
-        <colgroup>
-          <col width="20%" />
-          <col width="70%" />
-          <col width="10%" />
-        </colgroup>
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">No.</TableCell>
-            <TableCell align="left">Problem Name</TableCell>
-            <TableCell align="right">Solved</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index} hover style={{ cursor: 'pointer' }} onClick={() => { history.push(`${location.pathname}/${row.problemNumber}`); }}>
-              <TableCell align="left">{row.problemNumber}</TableCell>
-              <TableCell align="left">{row.problemName}</TableCell>
-              <TableCell align="right">{row.solved ? <Done /> : ''}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      { isLoading
+        ? <LoadingIndicator />
+        : (
+          <Table className={classes.table}>
+            <colgroup>
+              <col width="20%" />
+              <col width="70%" />
+              <col width="10%" />
+            </colgroup>
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">No.</TableCell>
+                <TableCell align="left">Problem Name</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, index) => (
+                <TableRow key={index} hover style={{ cursor: 'pointer' }} onClick={() => { history.push(`${location.pathname}/${row.problemNumber}`); }}>
+                  <TableCell align="left">{row.problemNumber + 1}</TableCell>
+                  <TableCell align="left">{row.problemName}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
     </Paper>
   );
 }
 
 QuestionList.propTypes = {
   isOpen: PropTypes.bool,
-  questions: PropTypes.array
+  questions: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default withRouter(QuestionList);

@@ -72,7 +72,7 @@ export default function SubmissionList(props) {
         </colgroup>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Submission Time</TableCell>
+            <TableCell align="left">Submission No</TableCell>
             <TableCell align="left">Problem Name</TableCell>
             <TableCell align="right">Verdict</TableCell>
           </TableRow>
@@ -80,7 +80,7 @@ export default function SubmissionList(props) {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name} hover>
-              <TableCell align="left">{row.submissionTime}</TableCell>
+              <TableCell align="left">{row.submissionTime + 1}</TableCell>
               <TableCell align="left">{row.problemName}</TableCell>
               <TableCell align="right">
                 {/* eslint-disable-next-line no-nested-ternary */}

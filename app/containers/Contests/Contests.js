@@ -33,7 +33,7 @@ class Contests extends Component {
 
   render() {
     const {
-      classes, contests, registerContest, history
+      classes, contests, registerContest, history, isLoading
     } = this.props;
     const { open } = this.state;
 
@@ -47,6 +47,7 @@ class Contests extends Component {
           contests={contests}
           onClick={(contestId) => { history.push(`/${contestId}/problems`); }}
           registerContest={registerContest}
+          isLoading={isLoading}
         />
       </div>
     );
@@ -58,7 +59,8 @@ Contests.propTypes = {
   classes: PropTypes.any,
   contests: PropTypes.array,
   registerContest: PropTypes.func,
-  history: PropTypes.any
+  history: PropTypes.any,
+  isLoading: PropTypes.bool
 };
 
 export default withStyles(styles)(Contests);

@@ -17,7 +17,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  questions: state.questions.questions
+  questions: state.questions.questions,
+  isLoading: state.questions.isLoading
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

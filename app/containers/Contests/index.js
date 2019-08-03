@@ -13,7 +13,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  contests: state.contests.contests
+  contests: state.contests.contests,
+  isLoading: state.contests.isLoading
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

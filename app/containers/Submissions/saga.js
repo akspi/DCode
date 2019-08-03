@@ -6,22 +6,18 @@ import { getResolvedSubmission } from '../../utils/web3ContractMethods';
 
 export function* fetchSubmissions(action) {
   try {
-    console.log(action.contestId);
     const result = yield call(getResolvedSubmission, parseInt(action.contestId, 10));
     const submissions = [];
-    console.log(result);
 
     for (let submissionId = 0; submissionId < result.arrayCount; submissionId += 1) {
       submissions.push({
-        submissionTime: result.piArray[submissionId],
-        problemName: `Submission ${submissionId}\t\n`,
+        submissionTime: submissionId,
+        problemName: `Problem ${parseInt(result.piArray[submissionId],10) + 1}\t\n`,
         verdict: (result.rsArray[submissionId] == 1)? true: false
       });
     }
-    console.log(submissions);
     yield put(updateSubmissions(submissions));
   } catch (err) {
-    console.log(err);
     updateErrorMessage(err.toString());
   }
 }

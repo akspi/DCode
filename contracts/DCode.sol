@@ -145,7 +145,7 @@ contract DCode {
       pendingSubmissionQueue[queueStart-1].correctCount += 1;
     else
       pendingSubmissionQueue[queueStart-1].wrongCount += 1;
-    if ((pendingSubmissionQueue[queueStart-1].correctCount + pendingSubmissionQueue[queueStart-1].wrongCount) >= 5) {
+    if ((pendingSubmissionQueue[queueStart-1].correctCount + pendingSubmissionQueue[queueStart-1].wrongCount) >= 3) {
       uint _contestId = pendingSubmissionQueue[queueStart-1].contestId;
       contestStatusMap[_contestId].resolvedSubmissionList.push(pendingSubmissionQueue[queueStart-1]);
       contestStatusMap[_contestId].resolvedCount += 1;
