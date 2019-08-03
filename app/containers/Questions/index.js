@@ -7,8 +7,9 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { fetchQuestions } from './actions';
 import {DCodeInstance} from '../../utils/web3Conf';
-
-console.log(DCodeInstance);
+import { ipfs } from '../../utils/ipfsConf';
+// console.log(DCodeInstance);
+console.log(ipfs);
 
 const mapDispatchToProps = (dispatch) => ({
   fetchQuestions: (contestId) => dispatch(fetchQuestions(contestId))

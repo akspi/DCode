@@ -119,7 +119,11 @@ contract DCode {
     pendingSubmissionQueue[queueEnd] = newEntry;
   }
 
-  function getPendingSubmission() public view returns (uint, string memory, string memory, string memory) {
+  function getPendingSubmission() public view returns (
+    uint subId,
+    string memory codeIpfs,
+    string memory testcaseIpfs,
+    string memory hashAnswerIpfs) {
     require(queueEnd >= queueStart, "Submission queue empty");
     require(pendingSubmissionQueue[queueStart].submitterAddress != msg.sender, "Cannot verify your own submission. Please wait");
     Entry memory pendingEntry = pendingSubmissionQueue[queueStart];
