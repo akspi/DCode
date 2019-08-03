@@ -1,4 +1,20 @@
+import Web3 from 'web3';
 import { DCodeInstance } from './web3Conf';
+
+const web3 = new Web3(Web3.givenProvider);
+
+window.addEventListener('load', async () => {
+  if (window.ethereum) {
+    window.web3 = new Web3(ethereum);
+    try {
+      await ethereum.enable();
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (window.web3) {
+    window.web3 = new Web3(web3.currentProvider);
+  }
+});
 
 const getSendParams = async () => {
   const accountIds = await web3.eth.getAccounts();
@@ -12,7 +28,7 @@ export async function getOngoingContest() {
 }
 
 export async function getContestDetails(contestId) {
-  return DCodeInstance.methods.getContestDetails(contestId).call();
+  return DCodeInstance.methods.getContestDetails(contestId).call(await getSendParams());
 }
 
 export async function addContest(contestName) {

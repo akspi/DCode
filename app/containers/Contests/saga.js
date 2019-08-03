@@ -1,5 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { FETCH_CONTESTS, REGISTER_CONTEST, updateContests, updateErrorMessage } from './actions';
+import {
+  FETCH_CONTESTS, REGISTER_CONTEST, updateContests, updateErrorMessage
+} from './actions';
 import { getContestDetails, getOngoingContest, registerUser } from '../../utils/web3ContractMethods';
 
 
@@ -10,17 +12,21 @@ export function* fetchContests() {
 
     for (let contestId = 0; contestId < result; contestId += 1) {
       const contest = yield call(getContestDetails, contestId);
+      console.log(contest);
       contests.push({
         id: contestId,
         name: contest.contestName,
         date: '03/07/19',
         participants: parseInt(contest.registraionCount, 10),
-        registered: !contest.isUserRegistered
+        registered: parseInt(contest.isUserRegistered, 10) !== 0
       });
     }
 
+    console.log(contests);
+
     yield put(updateContests(contests));
   } catch (err) {
+    console.log(err);
     yield put(updateErrorMessage(err.toString()));
   }
 }
