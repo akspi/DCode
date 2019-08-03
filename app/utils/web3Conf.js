@@ -229,6 +229,6 @@ const ABI = [
 	}
 ];
 
-const address = "0x13454479EF9aEAb6307B8CddA365A1A33D8b1EED";
+const address = "0xff54a9e1a5885ef17a85bbdac155e8bc69f1301f";
 
 export const DCodeInstance = new web3.eth.Contract(ABI, address);

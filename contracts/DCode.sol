@@ -50,14 +50,16 @@ contract DCode {
     string memory contestName,
     uint registraionCount,
     uint problemCount,
-    address creatorAddress) {
+    address creatorAddress,
+    bool isUserRegistered) {
 
     require(contestId >= _contestId, "Invalid contest Id");
     return (
       contestDetailsMap[_contestId].contestName,
       contestDetailsMap[_contestId].registrationCount,
       contestDetailsMap[_contestId].problemSetIpfs.length,
-      contestDetailsMap[_contestId].contestCreator
+      contestDetailsMap[_contestId].contestCreator,
+      contestDetailsMap[_contestId].registeredUsers[msg.sender]
     );
   }
 
