@@ -1,9 +1,9 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { FETCH_QUESTIONS, updateQuestions } from './actions';
+import { FETCH_SUBMISSIONS, updateSubmissions } from './actions';
 import { updateErrorMessage } from '../Contests/actions';
 
 
-export function* fetchQuestions() {
+export function* fetchSubmissions(contestId) {
   try {
     // const result = yield call(request, requestURL);
     // yield put(updateQuestions([]));
@@ -12,6 +12,6 @@ export function* fetchQuestions() {
   }
 }
 
-export default function* questionsSaga() {
-  yield takeLatest(FETCH_QUESTIONS, fetchQuestions);
+export default function* submissionsSaga() {
+  yield takeLatest(FETCH_SUBMISSIONS, fetchSubmissions);
 }

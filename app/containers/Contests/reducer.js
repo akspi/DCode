@@ -1,4 +1,4 @@
-import { UPDATE_CONTESTS } from './actions';
+import { UPDATE_CONTESTS, UPDATE_ERROR_MESSAGE } from './actions';
 
 // The initial state of the App
 const initialState = {
@@ -14,13 +14,17 @@ const initialState = {
     date: '03/07/19',
     participants: 15,
     registered: true
-  }]
+  }],
+  errorMessage: ''
 };
 
 function contestsReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_CONTESTS:
       return { ...state, contests: action.contests };
+    case UPDATE_ERROR_MESSAGE: {
+      return { ...state, contests: action.msg };
+    }
     default:
       return state;
   }

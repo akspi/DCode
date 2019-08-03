@@ -23,6 +23,7 @@ const initialState = {
     name: 'Vus the Cossack and a Contest\t\n',
     solved: false
   }],
+  errorMessage: ''
 };
 
 function questionsReducer(state = initialState, action) {
