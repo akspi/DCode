@@ -22,6 +22,9 @@ contract DCode {
   struct ContestDetails {
     Problem[] problemSetIpfs;
     address contestCreator;
+    string contestName;
+    mapping(address => bool) registeredUsers;
+    uint registrationCount;
   }
 
   struct ContestStatus {
@@ -39,11 +42,38 @@ contract DCode {
   mapping(uint => ContestDetails) contestDetailsMap;
   mapping(uint => ContestStatus) contestStatusMap;
 
-  function addContest() public returns (uint) {
+  function getOngoingContest() public view returns (uint) {
+    return contestId;
+  }
+
+  function getContestDetails(uint _contestId) public view returns (
+    string memory contestName,
+    uint registraionCount,
+    uint problemCount,
+    address creatorAddress) {
+
+    require(contestId >= _contestId, "Invalid contest Id");
+    return (
+      contestDetailsMap[_contestId].contestName,
+      contestDetailsMap[_contestId].registrationCount,
+      contestDetailsMap[_contestId].problemSetIpfs.length,
+      contestDetailsMap[_contestId].contestCreator
+    );
+  }
+
+  function addContest(string memory _contestName) public returns (uint) {
     contestId += 1;
     contestOwnerMap[msg.sender].push(contestId);
+    contestDetailsMap[contestId].contestName = _contestName;
     contestDetailsMap[contestId].contestCreator = msg.sender;
     return contestId;
+  }
+
+  function registerUser(uint _contestId) public {
+    require(contestId >= _contestId, "Invalid contest Id");
+    require(contestDetailsMap[_contestId].registeredUsers[msg.sender] == false, "Already registered");
+    contestDetailsMap[_contestId].registrationCount += 1;
+    contestDetailsMap[_contestId].registeredUsers[msg.sender] = true;
   }
 
   function addQuestion(uint _contestId, string memory _problemIpfs, string memory _testcaseIpfs, string memory _hashAnswerIpfs) public {
@@ -56,13 +86,13 @@ contract DCode {
     contestDetailsMap[_contestId].problemSetIpfs.push(newProblem);
   }
 
-  function getContestIds() public view returns (uint[] memory) {
+  function getCreatorContestIds() public view returns (uint[] memory) {
     return contestOwnerMap[msg.sender];
   }
 
   function getProblemDetails(uint _contestId, uint _problemIndex) public view returns (string memory) {
     require(contestId >= _contestId, "Invalid contest id");
-    require(contestDetailsMap[_contestId].problemSetIpfs.length >= _problemIndex, "Invalid problem index");
+    require(contestDetailsMap[_contestId].problemSetIpfs.length > _problemIndex, "Invalid problem index");
     Problem memory fetchedProblem = contestDetailsMap[_contestId].problemSetIpfs[_problemIndex];
     return fetchedProblem.problemIpfs;
   }
