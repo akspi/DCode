@@ -167,6 +167,10 @@ const ABI = [
 			{
 				"name": "creatorAddress",
 				"type": "address"
+			},
+			{
+				"name": "isUserRegistered",
+				"type": "bool"
 			}
 		],
 		"payable": false,
@@ -229,6 +233,6 @@ const ABI = [
 	}
 ];
 
-const address = "0xff54a9e1a5885ef17a85bbdac155e8bc69f1301f";
+const address = "0x635138b9f557ce00c7c64b51fe81622f2917bd70";
 
 export const DCodeInstance = new web3.eth.Contract(ABI, address);
