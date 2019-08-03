@@ -11,7 +11,10 @@ export async function getIpfsFileFromHash(ipfsHash) {
 
 export async function addFileToIpfs(fileString, encrypt = false) {
   if (encrypt) {
-    fileString = JSON.stringify(SHA1(fileString));
+    fileString = fileString.split("\n").map(inp => JSON.stringify(inp));
+    console.log("IM GOING TO BE A HASH SOON", fileString);
+    fileString = SHA1(JSON.stringify(fileString)).toString();
+    console.log("THIS IS THE HASH", fileString);
   } else {
     fileString = JSON.stringify(fileString);
   }
@@ -22,9 +25,10 @@ export async function addFileToIpfs(fileString, encrypt = false) {
 
 export const verifyCode = async (codeIpfs, testcaseIpfs, hashAnswerIpfs) => {
   const testCaseFile = await getIpfsFileFromHash(testcaseIpfs);
-  const testCases = testCaseFile[0].split('\n').map((line) => JSON.parse(line));
+  const testCases = testCaseFile.split('\n').map((line) => JSON.parse(line));
 
   const hashAnswerFile = await getIpfsFileFromHash(hashAnswerIpfs);
+  console.log(hashAnswerFile);
   const hashAnswer = hashAnswerFile[0]; // hash of result
 
   const functionString = await getIpfsFileFromHash(codeIpfs);

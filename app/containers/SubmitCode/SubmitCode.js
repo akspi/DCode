@@ -51,7 +51,7 @@ class SubmitCode extends Component {
     const { submitCode, match } = this.props;
 
     if (selectedProblem !== -1) {
-      submitCode(match.params.contestId, selectedProblem, code);
+      submitCode(match.params.contestId, selectedProblem - 1, code);
     }
   };
 

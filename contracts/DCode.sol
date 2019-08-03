@@ -36,9 +36,9 @@ contract DCode {
   uint contestId;
   uint submissionId;
 
-  uint queueStart = 1;
-  uint queueEnd = 0;
-  mapping(uint => Entry) pendingSubmissionQueue;
+  uint public queueStart = 1;
+  uint public queueEnd = 0;
+  mapping(uint => Entry) public pendingSubmissionQueue;
 
   mapping(address => uint[]) contestOwnerMap;
   mapping(uint => ContestDetails) contestDetailsMap;
@@ -111,8 +111,6 @@ contract DCode {
     require(contestId > _contestId, "Invalid contest id");
     require(contestDetailsMap[_contestId].problemSetIpfs.length >= _problemIndex, "Invalid problem index");
 
-    submissionId += 1;
-
     Entry memory newEntry = Entry({
       submissionId: submissionId,
       codeIpfs: _codeIpfs,
@@ -123,8 +121,9 @@ contract DCode {
       submitterAddress: msg.sender,
       timestamp: block.number
     });
-    queueEnd += 1;
     pendingSubmissionQueue[queueEnd] = newEntry;
+    submissionId += 1;
+    queueEnd += 1;
   }
 
   function getPendingSubmission() public view returns (
@@ -133,24 +132,24 @@ contract DCode {
     string memory testcaseIpfs,
     string memory hashAnswerIpfs) {
     require(queueEnd >= queueStart, "Submission queue empty");
-    require(pendingSubmissionQueue[queueStart].submitterAddress != msg.sender, "Cannot verify your own submission. Please wait");
-    Entry memory pendingEntry = pendingSubmissionQueue[queueStart];
+    require(pendingSubmissionQueue[queueStart-1].submitterAddress != msg.sender, "Cannot verify your own submission. Please wait");
+    Entry memory pendingEntry = pendingSubmissionQueue[queueStart-1];
     Problem memory problem = contestDetailsMap[pendingEntry.contestId].problemSetIpfs[pendingEntry.problemIndex];
     return (pendingEntry.submissionId, pendingEntry.codeIpfs, problem.testcaseIpfs, problem.hashAnswerIpfs);
   }
 
   function verifyResults(uint _submissionId, bool isCorrect) public {
     require(submissionId >= _submissionId, "Invalid Submission Id");
-    require(pendingSubmissionQueue[queueStart].submissionId == _submissionId, "Submission has already been processed");
+    require(pendingSubmissionQueue[queueStart-1].submissionId == _submissionId, "Submission has already been processed");
     if (isCorrect)
-      pendingSubmissionQueue[queueStart].correctCount += 1;
+      pendingSubmissionQueue[queueStart-1].correctCount += 1;
     else
-      pendingSubmissionQueue[queueStart].wrongCount += 1;
-    if ((pendingSubmissionQueue[queueStart].correctCount + pendingSubmissionQueue[queueStart].wrongCount) >= 5) {
-      uint _contestId = pendingSubmissionQueue[queueStart].contestId;
-      contestStatusMap[_contestId].resolvedSubmissionList.push(pendingSubmissionQueue[queueStart]);
+      pendingSubmissionQueue[queueStart-1].wrongCount += 1;
+    if ((pendingSubmissionQueue[queueStart-1].correctCount + pendingSubmissionQueue[queueStart-1].wrongCount) >= 5) {
+      uint _contestId = pendingSubmissionQueue[queueStart-1].contestId;
+      contestStatusMap[_contestId].resolvedSubmissionList.push(pendingSubmissionQueue[queueStart-1]);
       contestStatusMap[_contestId].resolvedCount += 1;
-      delete pendingSubmissionQueue[queueStart];
+      delete pendingSubmissionQueue[queueStart-1];
       queueStart += 1;
     }
   }

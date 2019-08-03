@@ -19,6 +19,51 @@ const ABI = [
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_contestName",
+				"type": "string"
+			}
+		],
+		"name": "addContest",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_contestId",
+				"type": "uint256"
+			},
+			{
+				"name": "_problemIpfs",
+				"type": "string"
+			},
+			{
+				"name": "_testcaseIpfs",
+				"type": "string"
+			},
+			{
+				"name": "_hashAnswerIpfs",
+				"type": "string"
+			}
+		],
+		"name": "addQuestion",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_contestId",
 				"type": "uint256"
 			}
@@ -27,59 +72,6 @@ const ABI = [
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_contestId",
-				"type": "uint256"
-			}
-		],
-		"name": "getResolvedSubmission",
-		"outputs": [
-			{
-				"name": "arrayCount",
-				"type": "uint256"
-			},
-			{
-				"name": "piArray",
-				"type": "uint256[]"
-			},
-			{
-				"name": "rsArray",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getPendingSubmission",
-		"outputs": [
-			{
-				"name": "subId",
-				"type": "uint256"
-			},
-			{
-				"name": "codeIpfs",
-				"type": "string"
-			},
-			{
-				"name": "testcaseIpfs",
-				"type": "string"
-			},
-			{
-				"name": "hashAnswerIpfs",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -105,70 +97,9 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getOngoingContest",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getCreatorContestIds",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_contestId",
-				"type": "uint256"
-			}
-		],
-		"name": "getResolvedCount",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_contestName",
-				"type": "string"
-			}
-		],
-		"name": "addContest",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "fallback"
 	},
 	{
 		"constant": false,
@@ -225,6 +156,60 @@ const ABI = [
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "getCreatorContestIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getOngoingContest",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPendingSubmission",
+		"outputs": [
+			{
+				"name": "subId",
+				"type": "uint256"
+			},
+			{
+				"name": "codeIpfs",
+				"type": "string"
+			},
+			{
+				"name": "testcaseIpfs",
+				"type": "string"
+			},
+			{
+				"name": "hashAnswerIpfs",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "_contestId",
@@ -247,32 +232,6 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_contestId",
-				"type": "uint256"
-			},
-			{
-				"name": "_problemIpfs",
-				"type": "string"
-			},
-			{
-				"name": "_testcaseIpfs",
-				"type": "string"
-			},
-			{
-				"name": "_hashAnswerIpfs",
-				"type": "string"
-			}
-		],
-		"name": "addQuestion",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
@@ -292,12 +251,128 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "fallback"
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_contestId",
+				"type": "uint256"
+			}
+		],
+		"name": "getResolvedCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_contestId",
+				"type": "uint256"
+			}
+		],
+		"name": "getResolvedSubmission",
+		"outputs": [
+			{
+				"name": "arrayCount",
+				"type": "uint256"
+			},
+			{
+				"name": "piArray",
+				"type": "uint256[]"
+			},
+			{
+				"name": "rsArray",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "pendingSubmissionQueue",
+		"outputs": [
+			{
+				"name": "submissionId",
+				"type": "uint256"
+			},
+			{
+				"name": "codeIpfs",
+				"type": "string"
+			},
+			{
+				"name": "contestId",
+				"type": "uint256"
+			},
+			{
+				"name": "problemIndex",
+				"type": "uint256"
+			},
+			{
+				"name": "correctCount",
+				"type": "uint256"
+			},
+			{
+				"name": "wrongCount",
+				"type": "uint256"
+			},
+			{
+				"name": "submitterAddress",
+				"type": "address"
+			},
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "queueEnd",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "queueStart",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ];
 
-const address = "0xab7623bfa8f008b4104aef61fe24ad654780de66";
+const address = "0x8002a16fe93ed9031dbcbff3b5ba90942d495db1";
 
 export const DCodeInstance = new web3.eth.Contract(ABI, address);
