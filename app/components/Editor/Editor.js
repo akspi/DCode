@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 
-import 'brace/mode/c_cpp';
+import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
@@ -10,7 +10,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import * as PropTypes from 'prop-types';
-import { getQuestionCount } from '../../utils/web3ContractMethods';
 
 const drawerWidth = 240;
 
