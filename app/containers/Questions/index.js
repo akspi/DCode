@@ -8,7 +8,7 @@ import injectSaga from '../../utils/injectSaga';
 import { fetchQuestions } from './actions';
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchQuestions: () => dispatch(fetchQuestions())
+  fetchQuestions: (contestId) => dispatch(fetchQuestions(contestId))
 });
 
 const mapStateToProps = (state) => ({

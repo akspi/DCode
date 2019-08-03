@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import * as PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -68,9 +69,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Editor() {
+function readFileContent(file) {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = (event) => resolve(event.target.result);
+    reader.onerror = (error) => reject(error);
+    reader.readAsText(file);
+  });
+}
+
+export default function Editor(props) {
   const classes = useStyles();
   const [fileName, setFileName] = useState('');
+  const { code, setCode } = props;
   let fileUpload = null;
 
   return (
@@ -86,6 +97,8 @@ export default function Editor() {
         theme="monokai"
         name="Div"
         fontSize={15}
+        value={code}
+        onChange={setCode}
         editorProps={{ $blockScrolling: true }}
       />
       <br />
@@ -107,6 +120,9 @@ export default function Editor() {
         <Grid item xs={6}>
           <input
             onChange={() => {
+              readFileContent(fileUpload.files[0]).then((content) => {
+                setCode(content);
+              });
               setFileName(fileUpload.files[0].name);
             }}
             ref={(ref) => { fileUpload = ref; }}
@@ -118,19 +134,23 @@ export default function Editor() {
             type="file"
           />
           <label htmlFor="raised-button-file">
-            <Button variant="contained" color="secondary" component="span" className={classes.button}>
+            <Button variant="contained" color="secondary" component="span" style={{ float: 'right' }} className={classes.button}>
               Upload Code
             </Button>
           </label>
-          <span style={{ padding: '5px 20px' }}>{fileName}</span>
+          <span style={{ padding: '5px 20px', float: 'right' }}>{fileName}</span>
         </Grid>
         <Grid item xs={12} />
         <Grid item xs={12} />
-        <Grid
-          item
-          xs={12}
-          alignContent={'center'}
-        >
+      </Grid>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
+        <Grid item xs={12}>
           <Button variant="contained" color="primary" className={classes.button}>
             Submit Code
           </Button>
@@ -141,3 +161,8 @@ export default function Editor() {
     </main>
   );
 }
+
+Editor.propTypes = {
+  code: PropTypes.string,
+  setCode: PropTypes.func
+};

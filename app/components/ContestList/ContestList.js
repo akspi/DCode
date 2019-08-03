@@ -7,10 +7,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-import { Clear, Done } from '@material-ui/icons';
 import * as PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LoadingIndicator from '../LoadingIndicator';
+import Button from '@material-ui/core/Button';
+import { withSnackbar } from 'notistack';
 
 const drawerWidth = 240;
 
@@ -46,17 +45,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(submissionTime, problemName, verdict) {
+function createData(contestId, contestName, contestDate, numParticipants, registered) {
   return {
-    submissionTime, problemName, verdict
+    contestId, contestName, contestDate, numParticipants, registered
   };
 }
 
-export default function SubmissionList(props) {
+function ContestList(props) {
   const classes = useStyles();
-  const { isOpen, submissions } = props;
+  const {
+    isOpen, contests, onClick, enqueueSnackbar, registerContest
+  } = props;
 
-  const rows = submissions.map((submission) => createData(submission.submissionTime, submission.problemName, submission.verdict));
+  const rows = contests.map((contest) => createData(contest.id, contest.name, contest.date, contest.participants, contest.registered));
+
+  const handleClick = (row) => {
+    if (row.registered) {
+      onClick(row.contestId);
+    } else {
+      enqueueSnackbar('You have to register for the contest');
+    }
+  };
 
   return (
     <Paper
@@ -66,28 +75,30 @@ export default function SubmissionList(props) {
     >
       <Table className={classes.table}>
         <colgroup>
-          <col width="30%" />
-          <col width="60%" />
-          <col width="10%" />
+          <col width="40%" />
+          <col width="20%" />
+          <col width="20%" />
+          <col width="20%" />
         </colgroup>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Submission Time</TableCell>
-            <TableCell align="left">Problem Name</TableCell>
-            <TableCell align="right">Verdict</TableCell>
+            <TableCell align="left">Contest Name</TableCell>
+            <TableCell align="left">Contest Date</TableCell>
+            <TableCell align="left">Number of Participants</TableCell>
+            <TableCell align="left" />
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name} hover>
-              <TableCell align="left">{row.submissionTime}</TableCell>
-              <TableCell align="left">{row.problemName}</TableCell>
-              <TableCell align="right">
-                {/* eslint-disable-next-line no-nested-ternary */}
-                {row.verdict == null
-                  ? <CircularProgress size={18} className={classes.progress} />
-                  : (row.verdict ? <Done /> : <Clear />)
-                }
+            <TableRow key={row.name} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
+              <TableCell align="left">{row.contestName}</TableCell>
+              <TableCell align="left">{row.contestDate}</TableCell>
+              <TableCell align="left">{row.numParticipants}</TableCell>
+              <TableCell align="center">{
+                !row.registered
+                  ? <Button variant={'contained'} color={'secondary'} onClick={(e) => { e.stopPropagation(); registerContest(row.contestId); }}>Register</Button>
+                  : <Button variant={'default'} color={'secondary'} disabled>Registered</Button>
+              }
               </TableCell>
             </TableRow>
           ))}
@@ -97,7 +108,11 @@ export default function SubmissionList(props) {
   );
 }
 
-SubmissionList.propTypes = {
+ContestList.propTypes = {
   isOpen: PropTypes.bool,
-  submissions: PropTypes.array
+  contests: PropTypes.array,
+  onClick: PropTypes.func,
+  registerContest: PropTypes.func
 };
+
+export default withSnackbar(ContestList);

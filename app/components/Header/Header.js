@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import * as PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { withRouter } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -33,9 +34,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(props) {
+function Header(props) {
   const classes = useStyles();
-  const { setIsDrawerOpen, isDrawerOpen } = props;
+  const {
+    setIsDrawerOpen, isDrawerOpen, title, match
+  } = props;
+  const { contestId, problemId } = match.params;
 
   return (
     <AppBar
@@ -55,7 +59,7 @@ export default function Header(props) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          Problems
+          {contestId ? `Contest #${contestId}` : ''} {problemId ? `Problem #${problemId}` : ''} {title}
         </Typography>
       </Toolbar>
     </AppBar>
@@ -64,5 +68,9 @@ export default function Header(props) {
 
 Header.propTypes = {
   setIsDrawerOpen: PropTypes.func,
-  isDrawerOpen: PropTypes.bool
+  isDrawerOpen: PropTypes.bool,
+  title: PropTypes.string,
+  match: PropTypes.any
 };
+
+export default withRouter(Header);

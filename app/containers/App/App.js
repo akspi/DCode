@@ -9,13 +9,16 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import './style.scss';
 import Questions from '../Questions';
 import SubmitCode from '../SubmitCode';
+import Contests from '../Contests';
+import ProblemStatement from '../ProblemStatement/ProblemStatement';
+import Submissions from '../Submissions';
+import Leaderboard from '../Leaderboard';
 
 const App = () => (
   <div className="app-wrapper">
@@ -25,13 +28,17 @@ const App = () => (
     >
       <meta name="description" content="A React.js Boilerplate application" />
     </Helmet>
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/features" component={FeaturePage} />
-      <Route path="/problems" component={Questions} />
-      <Route path="/submit" component={SubmitCode} />
-      <Route path="" component={NotFoundPage} />
-    </Switch>
+    <SnackbarProvider maxSnack={3} preventDuplicate>
+      <Switch>
+        <Route exact path="/" component={Contests} />
+        <Route path="/:contestId/problems/:problemId" component={ProblemStatement} />
+        <Route path="/:contestId/problems" component={Questions} />
+        <Route path="/:contestId/submissions" component={Submissions} />
+        <Route path="/:contestId/leaderboard" component={Leaderboard} />
+        <Route path="/:contestId/submit" component={SubmitCode} />
+        <Route path="" component={NotFoundPage} />
+      </Switch>
+    </SnackbarProvider>
   </div>
 );
 

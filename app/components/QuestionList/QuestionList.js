@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
 import { Done } from '@material-ui/icons';
 import * as PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -50,9 +51,9 @@ function createData(problemNumber, problemName, solved) {
   };
 }
 
-export default function QuestionList(props) {
+function QuestionList(props) {
   const classes = useStyles();
-  const { isOpen, questions } = props;
+  const { isOpen, questions, history, location } = props;
 
   const rows = questions.map((question) => createData(question.id, question.name, question.solved));
 
@@ -77,7 +78,7 @@ export default function QuestionList(props) {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name} hover>
+            <TableRow key={row.name} hover style={{ cursor: 'pointer' }} onClick={() => {history.push(`${location.pathname}/${row.problemNumber}`)}}>
               <TableCell align="left">{row.problemNumber}</TableCell>
               <TableCell align="left">{row.problemName}</TableCell>
               <TableCell align="right">{row.solved ? <Done /> : ''}</TableCell>
@@ -93,3 +94,5 @@ QuestionList.propTypes = {
   isOpen: PropTypes.bool,
   questions: PropTypes.array
 };
+
+export default withRouter(QuestionList);

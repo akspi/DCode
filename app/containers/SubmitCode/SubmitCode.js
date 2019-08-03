@@ -15,13 +15,14 @@ const useStyles = makeStyles(() => ({
 export default function SubmitCode() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [code, setCode] = useState('');
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header setIsDrawerOpen={setOpen} isDrawerOpen />
+      <Header setIsDrawerOpen={setOpen} isDrawerOpen title={'Submit Code'}/>
       <NavigationDrawer isDrawerOpen setIsDrawerOpen={setOpen} />
-      <Editor />
+      <Editor code={code} setCode={setCode}/>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import * as PropTypes from 'prop-types';
 import Header from '../../components/Header';
 import NavigationDrawer from '../../components/NavigationDrawer';
-import QuestionList from '../../components/QuestionList';
+import Problem from '../../components/Problem';
 
 const styles = () => ({
   root: {
@@ -12,17 +12,12 @@ const styles = () => ({
   },
 });
 
-class Questions extends Component {
+class ProblemStatement extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: true
     };
-  }
-
-  componentDidMount() {
-    const { fetchQuestions, match } = this.props;
-    fetchQuestions(match.params.contestId);
   }
 
   setOpen = (value) => {
@@ -32,25 +27,22 @@ class Questions extends Component {
   };
 
   render() {
-    const { classes, questions } = this.props;
+    const { classes } = this.props;
     const { open } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={'Problems'} />
+        <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={''} />
         <NavigationDrawer isDrawerOpen={open} setIsDrawerOpen={this.setOpen} />
-        <QuestionList isOpen={open} questions={questions} />
+        <Problem isOpen={open} />
       </div>
     );
   }
 }
 
-Questions.propTypes = {
-  fetchQuestions: PropTypes.func,
+ProblemStatement.propTypes = {
   classes: PropTypes.any,
-  questions: PropTypes.array,
-  match: PropTypes.any
 };
 
-export default withStyles(styles)(Questions);
+export default withStyles(styles)(ProblemStatement);

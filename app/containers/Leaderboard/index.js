@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import reducer from './reducer';
-import Submissions from './Submissions';
+import Leaderboard from './Leaderboard';
 import injectReducer from '../../utils/injectReducer';
-import { fetchSubmissions } from './actions';
+import { fetchLeaderboard } from './actions';
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSubmissions: (contestId) => dispatch(fetchSubmissions(contestId))
+  fetchLeaderboard: (contestId) => dispatch(fetchLeaderboard(contestId))
 });
 
 const mapStateToProps = (state) => ({
-  submissions: state.submissions.submissions
+  leaderboard: state.leaderboard.leaderboard
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'submissions', reducer });
+const withReducer = injectReducer({ key: 'leaderboard', reducer });
 
-export default compose(withReducer, withConnect)(Submissions);
+export default compose(withReducer, withConnect)(Leaderboard);
 export { mapDispatchToProps };

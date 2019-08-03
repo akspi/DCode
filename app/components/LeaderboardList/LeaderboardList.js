@@ -7,10 +7,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-import { Clear, Done } from '@material-ui/icons';
+import { Done } from '@material-ui/icons';
 import * as PropTypes from 'prop-types';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LoadingIndicator from '../LoadingIndicator';
+import { withRouter } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -46,17 +45,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(submissionTime, problemName, verdict) {
+function createData(rank, address) {
   return {
-    submissionTime, problemName, verdict
+    rank, address
   };
 }
 
-export default function SubmissionList(props) {
+function LeaderboardList(props) {
   const classes = useStyles();
-  const { isOpen, submissions } = props;
+  const {
+    isOpen, leaderboard, history, location
+  } = props;
 
-  const rows = submissions.map((submission) => createData(submission.submissionTime, submission.problemName, submission.verdict));
+  const rows = leaderboard.map((user, index) => createData(index + 1, user.address));
 
   return (
     <Paper
@@ -66,29 +67,20 @@ export default function SubmissionList(props) {
     >
       <Table className={classes.table}>
         <colgroup>
-          <col width="30%" />
-          <col width="60%" />
-          <col width="10%" />
+          <col width="20%" />
+          <col width="80%" />
         </colgroup>
         <TableHead>
           <TableRow>
-            <TableCell align="left">Submission Time</TableCell>
-            <TableCell align="left">Problem Name</TableCell>
-            <TableCell align="right">Verdict</TableCell>
+            <TableCell align="left">Rank</TableCell>
+            <TableCell align="left">User</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name} hover>
-              <TableCell align="left">{row.submissionTime}</TableCell>
-              <TableCell align="left">{row.problemName}</TableCell>
-              <TableCell align="right">
-                {/* eslint-disable-next-line no-nested-ternary */}
-                {row.verdict == null
-                  ? <CircularProgress size={18} className={classes.progress} />
-                  : (row.verdict ? <Done /> : <Clear />)
-                }
-              </TableCell>
+            <TableRow key={row.name} hover style={{ cursor: 'pointer' }} onClick={() => { history.push(`${location.pathname}/${row.problemNumber}`); }}>
+              <TableCell align="left">{row.rank}</TableCell>
+              <TableCell align="left">{row.address}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -97,7 +89,9 @@ export default function SubmissionList(props) {
   );
 }
 
-SubmissionList.propTypes = {
+LeaderboardList.propTypes = {
   isOpen: PropTypes.bool,
-  submissions: PropTypes.array
+  leaderboard: PropTypes.array
 };
+
+export default withRouter(LeaderboardList);

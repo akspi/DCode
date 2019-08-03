@@ -7,8 +7,9 @@ export function updateQuestions(questions) {
 }
 
 export const FETCH_QUESTIONS = 'FETCH_QUESTIONS';
-export function fetchQuestions() {
+export function fetchQuestions(contestId) {
   return {
-    type: FETCH_QUESTIONS
+    type: FETCH_QUESTIONS,
+    contestId
   };
 }
