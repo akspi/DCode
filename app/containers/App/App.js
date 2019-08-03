@@ -19,6 +19,7 @@ import Contests from '../Contests';
 import ProblemStatement from '../ProblemStatement/ProblemStatement';
 import Submissions from '../Submissions';
 import Leaderboard from '../Leaderboard';
+import Admin from '../Admin';
 
 const App = () => (
   <div className="app-wrapper">
@@ -36,6 +37,7 @@ const App = () => (
         <Route path="/:contestId/submissions" component={Submissions} />
         <Route path="/:contestId/leaderboard" component={Leaderboard} />
         <Route path="/:contestId/submit" component={SubmitCode} />
+        <Route path="/createContest" component={Admin} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     </SnackbarProvider>

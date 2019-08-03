@@ -42,7 +42,12 @@ class Contests extends Component {
         <CssBaseline />
         <Header setIsDrawerOpen={this.setOpen} isDrawerOpen={open} title={'Contests'} />
         <NavigationDrawer isDrawerOpen={open} setIsDrawerOpen={this.setOpen} />
-        <ContestList isOpen contests={contests} onClick={(contestId) => { history.push(`/${contestId}/problems`); }} registerContest={registerContest} />
+        <ContestList
+          isOpen
+          contests={contests}
+          onClick={(contestId) => { history.push(`/${contestId}/problems`); }}
+          registerContest={registerContest}
+        />
       </div>
     );
   }
