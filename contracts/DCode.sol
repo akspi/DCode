@@ -23,7 +23,7 @@ contract DCode {
     Problem[] problemSetIpfs;
     address contestCreator;
     string contestName;
-    mapping(address => bool) registeredUsers;
+    mapping(address => uint) registeredUsers;
     uint registrationCount;
   }
 
@@ -51,7 +51,7 @@ contract DCode {
     uint registraionCount,
     uint problemCount,
     address creatorAddress,
-    bool isUserRegistered) {
+    uint isUserRegistered) {
 
     require(contestId >= _contestId, "Invalid contest Id");
     return (
@@ -73,9 +73,9 @@ contract DCode {
 
   function registerUser(uint _contestId) public {
     require(contestId >= _contestId, "Invalid contest Id");
-    require(contestDetailsMap[_contestId].registeredUsers[msg.sender] == false, "Already registered");
+    require(contestDetailsMap[_contestId].registeredUsers[msg.sender] == 0, "Already registered");
     contestDetailsMap[_contestId].registrationCount += 1;
-    contestDetailsMap[_contestId].registeredUsers[msg.sender] = true;
+    contestDetailsMap[_contestId].registeredUsers[msg.sender] = 1;
   }
 
   function addQuestion(uint _contestId, string memory _problemIpfs, string memory _testcaseIpfs, string memory _hashAnswerIpfs) public {

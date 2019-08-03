@@ -20,7 +20,7 @@ export async function addContest(contestName) {
 }
 
 export async function registerUser(contestId) {
-  return DCodeInstance.methods.registerUser(contestId).send(getSendParams());
+  return DCodeInstance.methods.registerUser(contestId).send(await getSendParams());
 }
 
 async function addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs) {

@@ -8,7 +8,7 @@ import injectSaga from '../../utils/injectSaga';
 import { fetchQuestions } from './actions';
 import {DCodeInstance} from '../../utils/web3Conf';
 import { ipfs } from '../../utils/ipfsConf';
-// console.log(DCodeInstance);
+console.log(DCodeInstance);
 console.log(ipfs);
 
 const mapDispatchToProps = (dispatch) => ({
