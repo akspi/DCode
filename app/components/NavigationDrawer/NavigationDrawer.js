@@ -13,7 +13,8 @@ import ListItem from '@material-ui/core/ListItem';
 import { useTheme } from '@material-ui/core';
 import * as PropTypes from 'prop-types';
 import {
-  FilterNone, Home, ListAlt, Lock
+  Create,
+  FilterNone, Home, ListAlt, Lock,
 } from '@material-ui/icons';
 import { withRouter } from 'react-router-dom';
 
@@ -65,27 +66,29 @@ function NavigationDrawer(props) {
           <ListItemIcon><Home /></ListItemIcon>
           <ListItemText primary={'Contests'} />
         </ListItem>
-       {contestId 
-        ? <div>
-            <ListItem button key={'Problems'} onClick={() => { history.push(`/${contestId}/problems`); }}>
-              <ListItemIcon><ViewList /></ListItemIcon>
-              <ListItemText primary={'Problems'} />
-            </ListItem>
-            <ListItem button key={'My Submissions'} onClick={() => { history.push(`/${contestId}/submissions`); }}>
-              <ListItemIcon><FilterNone /></ListItemIcon>
-              <ListItemText primary={'My Submissions'} />
-            </ListItem>
-            <ListItem button key={'Submit Code'} onClick={() => { history.push(`/${contestId}/submit`); }}>
-              <ListItemIcon><Lock /></ListItemIcon>
-              <ListItemText primary={'Submit Code'} />
-            </ListItem>
-            <ListItem button key={'Leaderboard'} onClick={() => { history.push(`/${contestId}/leaderboard`); }}>
-              <ListItemIcon><ListAlt /></ListItemIcon>
-              <ListItemText primary={'Leaderboard'} />
-            </ListItem>
-        </div> : null}
+        {contestId
+          ? (
+            <div>
+              <ListItem button key={'Problems'} onClick={() => { history.push(`/${contestId}/problems`); }}>
+                <ListItemIcon><ViewList /></ListItemIcon>
+                <ListItemText primary={'Problems'} />
+              </ListItem>
+              <ListItem button key={'My Submissions'} onClick={() => { history.push(`/${contestId}/submissions`); }}>
+                <ListItemIcon><FilterNone /></ListItemIcon>
+                <ListItemText primary={'My Submissions'} />
+              </ListItem>
+              <ListItem button key={'Submit Code'} onClick={() => { history.push(`/${contestId}/submit`); }}>
+                <ListItemIcon><Lock /></ListItemIcon>
+                <ListItemText primary={'Submit Code'} />
+              </ListItem>
+              <ListItem button key={'Leaderboard'} onClick={() => { history.push(`/${contestId}/leaderboard`); }}>
+                <ListItemIcon><ListAlt /></ListItemIcon>
+                <ListItemText primary={'Leaderboard'} />
+              </ListItem>
+            </div>
+          ) : null}
         <ListItem button key={'Create Contest'} onClick={() => { history.push('/createContest'); }}>
-          <ListItemIcon><ListAlt /></ListItemIcon>
+          <ListItemIcon><Create /></ListItemIcon>
           <ListItemText primary={'Create Contest'} />
         </ListItem>
       </List>

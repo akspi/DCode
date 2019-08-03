@@ -18,6 +18,7 @@ export default function Problem(props) {
         defaultValue="Enter Problem Statement Here"
         value={problemStatement}
         onChange={(e) => {
+          console.log(e.target.value);
           changeProblem({
             ...problem,
             problemStatement: e.target.value

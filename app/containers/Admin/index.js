@@ -8,8 +8,7 @@ import saga from './saga';
 import injectSaga from '../../utils/injectSaga';
 
 const mapDispatchToProps = (dispatch) => ({
-  createContest: (contestName) => dispatch(createContest(contestName)),
-  addProblem: (problemStatement, input, output) => dispatch(addProblem(problemStatement, input, output))
+  createContest: (contestName, problems) => dispatch(createContest(contestName, problems))
 });
 
 const mapStateToProps = (state) => ({});

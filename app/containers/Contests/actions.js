@@ -21,6 +21,7 @@ export function registerContest(contestId) {
   };
 }
 
+
 export const UPDATE_ERROR_MESSAGE = 'UPDATE_ERROR_MESSAGE';
 export function updateErrorMessage(msg) {
   return {

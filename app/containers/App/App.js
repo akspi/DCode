@@ -13,6 +13,7 @@ import { SnackbarProvider } from 'notistack';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import './style.scss';
+import { ToastContainer } from 'react-toastify';
 import Questions from '../Questions';
 import SubmitCode from '../SubmitCode';
 import Contests from '../Contests';
@@ -20,6 +21,7 @@ import ProblemStatement from '../ProblemStatement/ProblemStatement';
 import Submissions from '../Submissions';
 import Leaderboard from '../Leaderboard';
 import Admin from '../Admin';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => (
   <div className="app-wrapper">
@@ -29,6 +31,17 @@ const App = () => (
     >
       <meta name="description" content="A React.js Boilerplate application" />
     </Helmet>
+    <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnVisibilityChange
+      draggable
+      pauseOnHover
+    />
     <SnackbarProvider maxSnack={3} preventDuplicate>
       <Switch>
         <Route exact path="/" component={Contests} />

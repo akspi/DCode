@@ -1,9 +1,23 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import {
+  call, put, select, takeEvery
+} from 'redux-saga/effects';
 import {
   FETCH_CONTESTS, REGISTER_CONTEST, updateContests, updateErrorMessage
 } from './actions';
 import { getContestDetails, getOngoingContest, registerUser } from '../../utils/web3ContractMethods';
+import { toast } from 'react-toastify';
 
+const toastOptions = {
+  position: 'bottom-right',
+  autoClose: 5000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true
+};
+
+
+export const getContestState = (state) => state.contests;
 
 export function* fetchContests() {
   try {
@@ -12,7 +26,6 @@ export function* fetchContests() {
 
     for (let contestId = 0; contestId < result; contestId += 1) {
       const contest = yield call(getContestDetails, contestId);
-      console.log(contest);
       contests.push({
         id: contestId,
         name: contest.contestName,
@@ -21,8 +34,6 @@ export function* fetchContests() {
         registered: parseInt(contest.isUserRegistered, 10) !== 0
       });
     }
-
-    console.log(contests);
 
     yield put(updateContests(contests));
   } catch (err) {
@@ -33,11 +44,11 @@ export function* fetchContests() {
 
 export function* registerContest(action) {
   try {
-    console.log(action.contestId);
     const result = yield call(registerUser, action.contestId);
-    console.log(result);
-    // yield call(fetchContests);
+    yield call(fetchContests);
+    toast.success('Registered for contest successfully!', toastOptions);
   } catch (err) {
+    console.log(err);
     // yield put(updateErrorMessage(err.toString()));
   }
 }

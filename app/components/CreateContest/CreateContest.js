@@ -72,8 +72,9 @@ class CreateContest extends Component {
     });
   };
 
-  changeProblem = (problem, index) => {
+  changeProblem = (index, problem) => {
     const { problems } = this.state;
+    console.log(problem, index);
     problems[index] = problem;
     this.setState({
       problems

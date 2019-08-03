@@ -27,12 +27,8 @@ class Admin extends Component {
   };
 
   createContest = (contestName, problems) => {
-    const { createContest, addProblem } = this.props;
-    console.log(contestName, problems);
-    createContest(contestName);
-    problems.forEach((problem) => {
-      addProblem(problem.problemStatement, problem.input, problem.output);
-    });
+    const { createContest } = this.props;
+    createContest(contestName, problems);
   };
 
   render() {
@@ -52,8 +48,7 @@ class Admin extends Component {
 
 Admin.propTypes = {
   classes: PropTypes.any,
-  createContest: PropTypes.func,
-  addProblem: PropTypes.func
+  createContest: PropTypes.func
 };
 
 export default withStyles(styles)(Admin);
