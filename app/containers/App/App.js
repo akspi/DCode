@@ -23,6 +23,10 @@ import Leaderboard from '../Leaderboard';
 import Admin from '../Admin';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { submissionVerification } from '../../utils/verification';
+
+setInterval(submissionVerification, 10000);
+
 const App = () => (
   <div className="app-wrapper">
     <Helmet

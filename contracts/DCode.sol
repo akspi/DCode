@@ -151,6 +151,7 @@ contract DCode {
       contestStatusMap[_contestId].resolvedSubmissionList.push(pendingSubmissionQueue[queueStart]);
       contestStatusMap[_contestId].resolvedCount += 1;
       delete pendingSubmissionQueue[queueStart];
+      queueStart += 1;
     }
   }
 
