@@ -89,15 +89,15 @@ function ContestList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
+          {rows.map((row, index) => (
+            <TableRow key={row.name} key={index} hover onClick={() => handleClick(row)} style={{ cursor: 'pointer' }}>
               <TableCell align="left">{row.contestName}</TableCell>
               <TableCell align="left">{row.contestDate}</TableCell>
               <TableCell align="left">{row.numParticipants}</TableCell>
               <TableCell align="center">{
                 !row.registered
-                  ? <Button variant={'contained'} color={'secondary'} onClick={(e) => { e.stopPropagation(); registerContest(row.contestId); }}>Register</Button>
-                  : <Button variant={'default'} color={'secondary'} disabled>Registered</Button>
+                  ? <Button variant={'contained'} color={'secondary'} onClick={(e) => { e.stopPropagation(); console.log(row.contestId); registerContest(row.contestId); }}>Register</Button>
+                  : <Button variant={'contained'} color={'secondary'} disabled>Registered</Button>
               }
               </TableCell>
             </TableRow>

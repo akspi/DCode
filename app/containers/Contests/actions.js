@@ -6,9 +6,10 @@ export function fetchContests() {
 }
 
 export const UPDATE_CONTESTS = 'UPDATE_CONTESTS';
-export function updateContests() {
+export function updateContests(contests) {
   return {
-    type: UPDATE_CONTESTS
+    type: UPDATE_CONTESTS,
+    contests
   };
 }
 

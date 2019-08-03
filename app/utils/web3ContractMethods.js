@@ -1,26 +1,26 @@
-import { DCodeInstance } from "./web3Conf";
+import { DCodeInstance } from './web3Conf';
 
-getSendParams = async () => {
+const getSendParams = async () => {
   const accountIds = await web3.eth.getAccounts();
   return {
     from: accountIds[0],
   };
-}
+};
 
-async function getOngoingContest() {
+export async function getOngoingContest() {
   return DCodeInstance.methods.getOngoingContest().call();
 }
 
-async function getContestDetails(contestId) {
+export async function getContestDetails(contestId) {
   return DCodeInstance.methods.getContestDetails(contestId).call();
 }
 
-async function addContest(contestName) {
+export async function addContest(contestName) {
   return DCodeInstance.methods.addContest().send(getSendParams());
 }
 
-async function registerUser(contestId) {
-  return DCodeInstance.methods.registerUser(contestid).send(getSendParams());
+export async function registerUser(contestId) {
+  return DCodeInstance.methods.registerUser(contestId).send(getSendParams());
 }
 
 async function addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs) {
