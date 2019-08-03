@@ -223,16 +223,35 @@ const ABI = [
 		"name": "getProblemDetails",
 		"outputs": [
 			{
-				"name": "",
+				"name": "problemIpfs",
 				"type": "string"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_contestId",
+				"type": "uint256"
+			}
+		],
+		"name": "getQuestionCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
-]; 
+];
 
-const address = "0x8158843d8442bae976fd1d886482d7401028e3b8";
+const address = "0x7051c5474781d3a82e667fe5c10051ad129a81e3";
 
 export const DCodeInstance = new web3.eth.Contract(ABI, address);

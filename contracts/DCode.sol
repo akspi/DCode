@@ -25,6 +25,7 @@ contract DCode {
     string contestName;
     mapping(address => uint) registeredUsers;
     uint registrationCount;
+    uint problemCount;
   }
 
   struct ContestStatus {
@@ -64,10 +65,10 @@ contract DCode {
   }
 
   function addContest(string memory _contestName) public returns (uint) {
-    contestId += 1;
     contestOwnerMap[msg.sender].push(contestId);
     contestDetailsMap[contestId].contestName = _contestName;
     contestDetailsMap[contestId].contestCreator = msg.sender;
+    contestId += 1;
     return contestId;
   }
 
@@ -86,13 +87,19 @@ contract DCode {
       hashAnswerIpfs: _hashAnswerIpfs
     });
     contestDetailsMap[_contestId].problemSetIpfs.push(newProblem);
+    contestDetailsMap[_contestId].problemCount += 1;
+  }
+
+  function getQuestionCount(uint _contestId) public view returns (uint) {
+    require(contestId >= _contestId, "Invalid Contest Id");
+    return contestDetailsMap[_contestId].problemCount;
   }
 
   function getCreatorContestIds() public view returns (uint[] memory) {
     return contestOwnerMap[msg.sender];
   }
 
-  function getProblemDetails(uint _contestId, uint _problemIndex) public view returns (string memory) {
+  function getProblemDetails(uint _contestId, uint _problemIndex) public view returns (string memory problemIpfs) {
     require(contestId >= _contestId, "Invalid contest id");
     require(contestDetailsMap[_contestId].problemSetIpfs.length > _problemIndex, "Invalid problem index");
     Problem memory fetchedProblem = contestDetailsMap[_contestId].problemSetIpfs[_problemIndex];

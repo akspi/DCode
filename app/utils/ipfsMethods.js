@@ -1,7 +1,7 @@
 import { ipfs } from "./ipfsConf";
 const SHA1 = require('crypto-js/sha1');
 
-async function getIpfsFileFromHash(ipfsHash) {
+export async function getIpfsFileFromHash(ipfsHash) {
   const files =  await ipfs.get(ipfsHash);
   return files.map(element => {
     return element.content.toString('utf8');

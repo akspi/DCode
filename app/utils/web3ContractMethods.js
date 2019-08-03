@@ -27,6 +27,10 @@ export async function getOngoingContest() {
   return DCodeInstance.methods.getOngoingContest().call();
 }
 
+export async function getQuestionCount(_contestId) {
+  return DCodeInstance.methods.getQuestionCount(_contestId).call(await getSendParams());
+}
+
 export async function getContestDetails(contestId) {
   return DCodeInstance.methods.getContestDetails(contestId).call(await getSendParams());
 }
@@ -40,25 +44,25 @@ export async function registerUser(contestId) {
 }
 
 export async function addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs) {
-  return DCodeInstance.methods.addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs).send(getSendParams());
+  return DCodeInstance.methods.addQuestion(contestId, problemIpfs, testcaseIpfs, hashAnswerIpfs).send(await getSendParams());
 }
 
-async function getCreatorContestIds() {
-  return DCodeInstance.methods.getCreatorContestIds().call();
+export async function getCreatorContestIds() {
+  return DCodeInstance.methods.getCreatorContestIds().call(await getSendParams());
 }
 
-async function getProblemDetails(contestId, problemIndex) {
-  return DCodeInstance.methods.getProblemDetails(contestId, problemIndex).call();
+export async function getProblemDetails(contestId, problemIndex) {
+  return DCodeInstance.methods.getProblemDetails(contestId, problemIndex).call(await getSendParams());
 }
 
-async function submitEntry(contestId, codeIpfs, problemIndex) {
-  return DCodeInstance.methods.submitEntry(contestId, codeIpfs, problemIndex).send(getSendParams());
+export async function submitEntry(contestId, codeIpfs, problemIndex) {
+  return DCodeInstance.methods.submitEntry(contestId, codeIpfs, problemIndex).send((await getSendParams()));
 }
 
-async function getPendingSubmission() {
-  return DCodeInstance.methods.getPendingSubmission().call();
+export async function getPendingSubmission() {
+  return DCodeInstance.methods.getPendingSubmission().call(await getSendParams());
 }
 
-async function verifyResults(submissionId, isCorrect) {
-  return DCodeInstance.methods.verifyResults(submissionId, isCorrect).send(getSendParams());
+export async function verifyResults(submissionId, isCorrect) {
+  return DCodeInstance.methods.verifyResults(submissionId, isCorrect).send(await getSendParams());
 }
