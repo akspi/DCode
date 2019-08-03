@@ -6,6 +6,9 @@ import Questions from './Questions';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { fetchQuestions } from './actions';
+import {DCodeInstance} from '../../utils/web3Conf';
+
+console.log(DCodeInstance);
 
 const mapDispatchToProps = (dispatch) => ({
   fetchQuestions: (contestId) => dispatch(fetchQuestions(contestId))

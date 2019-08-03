@@ -138,4 +138,6 @@ contract DCode {
       delete pendingSubmissionQueue[queueStart];
     }
   }
+
+  function() external payable {}
 }

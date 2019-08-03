@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+const web3 = new Web3(Web3.givenProvider);
 window.addEventListener('load', async () => {
   if (window.ethereum) {
     window.web3 = new Web3(ethereum);
@@ -17,14 +17,14 @@ window.addEventListener('load', async () => {
 const ABI = [
 	{
 		"constant": false,
-		"inputs": [],
-		"name": "addContest",
-		"outputs": [
+		"inputs": [
 			{
-				"name": "",
+				"name": "_contestId",
 				"type": "uint256"
 			}
 		],
+		"name": "registerUser",
+		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -56,20 +56,6 @@ const ABI = [
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getContestIds",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"constant": false,
 		"inputs": [
 			{
@@ -92,6 +78,53 @@ const ABI = [
 		"type": "function"
 	},
 	{
+		"constant": true,
+		"inputs": [],
+		"name": "getOngoingContest",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getCreatorContestIds",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_contestName",
+				"type": "string"
+			}
+		],
+		"name": "addContest",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": false,
 		"inputs": [
 			{
@@ -107,6 +140,37 @@ const ABI = [
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_contestId",
+				"type": "uint256"
+			}
+		],
+		"name": "getContestDetails",
+		"outputs": [
+			{
+				"name": "contestName",
+				"type": "string"
+			},
+			{
+				"name": "registraionCount",
+				"type": "uint256"
+			},
+			{
+				"name": "problemCount",
+				"type": "uint256"
+			},
+			{
+				"name": "creatorAddress",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -157,9 +221,14 @@ const ABI = [
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "fallback"
 	}
 ];
 
-const address = "0x1b85B171a066A4E364468407D78d52D382ad0e91";
+const address = "0x13454479EF9aEAb6307B8CddA365A1A33D8b1EED";
 
-export const myContractInstance = new web3.eth.Contract(ABI, address);
+export const DCodeInstance = new web3.eth.Contract(ABI, address);

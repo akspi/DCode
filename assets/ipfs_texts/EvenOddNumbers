@@ -1,0 +1,9 @@
+## Equal sum of even and odd numbers
+
+Let's say we have an array of numbers `[5, 2, 4, 7]` and we want to check if sum(even numbers) = sum(odd numbers).
+
+Write a function to find if the sum of even numbers matches the sum of the odd numbers in the given array
+
+## Test Example
+`Input`: `[5, 2, 4, 7]`
+`Output`: `False`
