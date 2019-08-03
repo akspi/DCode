@@ -1,8 +1,13 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import {
+  call, put, takeEvery, select
+} from 'redux-saga/effects';
+import { toast } from 'react-toastify';
+import { push, createMatchSelector } from 'connected-react-router';
 import { FETCH_QUESTIONS, SUBMIT_CODE, updateQuestions } from './actions';
 import { getProblemDetails, getQuestionCount, submitEntry } from '../../utils/web3ContractMethods';
 import { addFileToIpfs } from '../../utils/ipfsMethods';
-import { toast } from 'react-toastify';
+
+const getRouterState = (state) => state.router;
 
 const toastOptions = {
   position: 'bottom-right',
@@ -36,9 +41,16 @@ export function* fetchQuestions(action) {
 export function* submitCode(action) {
   try {
     const codeIpfsHash = yield call(addFileToIpfs, action.code);
-    console.log(codeIpfsHash);
     yield call(submitEntry, action.contestId, codeIpfsHash, action.problemId);
     toast.success('Your code has been successfully submitted.', toastOptions);
+
+    const routerState = yield select(getRouterState);
+    const { pathname } = routerState.location;
+    const [, contestId] = pathname.split('/');
+
+    console.log('Contest ID', contestId);
+
+    yield put(push(`/${contestId}/problems`));
   } catch (err) {
     console.log(err);
   }

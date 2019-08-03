@@ -1,5 +1,6 @@
-import { call, takeEvery } from 'redux-saga/effects';
+import { put, call, takeEvery } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import { push } from 'connected-react-router';
 import { CREATE_CONTEST } from './actions';
 import { addContest, addQuestion, getOngoingContest } from '../../utils/web3ContractMethods';
 import { addFileToIpfs } from '../../utils/ipfsMethods';
@@ -23,23 +24,19 @@ export function* createContestSaga(action) {
 
     for (let i = 0; i < action.problems.length; i++) {
       const problem = action.problems[i];
-      console.log(problem);
       const problemIpfsHash = yield call(addFileToIpfs, problem.problemStatement);
-      console.log(problemIpfsHash);
       const inputIpfsHash = yield call(addFileToIpfs, problem.input);
-      console.log(inputIpfsHash);
       const outputIpfsHash = yield call(addFileToIpfs, problem.output, true);
-      console.log(outputIpfsHash);
 
       const result = yield call(addQuestion, currentContestId, problemIpfsHash, inputIpfsHash, outputIpfsHash);
-      console.log(result);
-
       toast.info(`Uploaded Problem ${i + 1}`, toastOptions);
     }
 
-    toast.success(`Contest created successfully!`, toastOptions);
+    toast.success('Contest created successfully!', toastOptions);
+    yield put(push('/'));
   } catch (err) {
     console.log(err);
+    toast.error(err.toString(), toastOptions);
     // yield put(updateErrorMessage(err.toString()));
   }
 }
