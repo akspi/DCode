@@ -13,8 +13,8 @@ export function* fetchQuestions(action) {
       const question = yield call(getProblemDetails, action.contestId, questionId);
       console.log(question);
       questions.push({
-        id: questionId + 1,
-        name: `Problem ${questionId + 1}\t\n`,
+        id: questionId,
+        name: `Problem ${questionId}\t\n`,
         solved: false
       });
     }

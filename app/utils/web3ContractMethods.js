@@ -66,3 +66,7 @@ export async function getPendingSubmission() {
 export async function verifyResults(submissionId, isCorrect) {
   return DCodeInstance.methods.verifyResults(submissionId, isCorrect).send(await getSendParams());
 }
+
+export async function getResolvedSubmission(contestId) {
+  return DCodeInstance.methods.getResolvedSubmission(contestId).call(await getSendParams());
+}

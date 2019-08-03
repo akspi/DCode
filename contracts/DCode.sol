@@ -30,6 +30,7 @@ contract DCode {
 
   struct ContestStatus {
     Entry[] resolvedSubmissionList;
+    uint resolvedCount;
   }
 
   uint contestId;
@@ -107,7 +108,7 @@ contract DCode {
   }
 
   function submitEntry(uint _contestId, string memory _codeIpfs, uint _problemIndex) public {
-    require(contestId >= _contestId, "Invalid contest id");
+    require(contestId > _contestId, "Invalid contest id");
     require(contestDetailsMap[_contestId].problemSetIpfs.length >= _problemIndex, "Invalid problem index");
 
     submissionId += 1;
@@ -148,8 +149,31 @@ contract DCode {
     if ((pendingSubmissionQueue[queueStart].correctCount + pendingSubmissionQueue[queueStart].wrongCount) >= 5) {
       uint _contestId = pendingSubmissionQueue[queueStart].contestId;
       contestStatusMap[_contestId].resolvedSubmissionList.push(pendingSubmissionQueue[queueStart]);
+      contestStatusMap[_contestId].resolvedCount += 1;
       delete pendingSubmissionQueue[queueStart];
     }
+  }
+
+  function getResolvedSubmission(uint _contestId) public view returns (uint arrayCount, uint[] memory piArray, uint[] memory rsArray){
+    require(contestId > _contestId, "Invalid contest id");
+    uint[] memory problemIndexArray = new uint[](20); // TODO: Fix
+    uint[] memory resultArray = new uint[](20);
+    uint count = 0;
+    for(uint i = 0; i < contestStatusMap[_contestId].resolvedSubmissionList.length; i += 1) {
+      Entry memory entry = contestStatusMap[_contestId].resolvedSubmissionList[i];
+      if (entry.submitterAddress == msg.sender) {
+        problemIndexArray[count] = entry.problemIndex;
+        uint result = (entry.correctCount > entry.wrongCount)? 1: 0;
+        resultArray[count] = result;
+        count += 1;
+      }
+    }
+    return (count, problemIndexArray, resultArray);
+  }
+
+  function getResolvedCount(uint _contestId) public view returns (uint) {
+    require(contestId > _contestId, "Invalid contest id");
+    return contestStatusMap[_contestId].resolvedCount;
   }
 
   function() external payable {}

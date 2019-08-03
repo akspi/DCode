@@ -20,6 +20,11 @@ class Submissions extends Component {
     };
   }
 
+  componentDidMount() {
+    const { fetchSubmissions, match } = this.props;
+    fetchSubmissions(match.params.contestId);
+  }
+
   setOpen = (value) => {
     this.setState({
       open: value
